@@ -3425,6 +3425,7 @@ MonoBehaviour:
   mainListener: {fileID: 1141313164}
   isStartSequence: 1
   isLevelPicked: 0
+  introRunning: 0
   cameraSpeed: 4
   pearlCount: 0
 --- !u!114 &332401818
@@ -8272,8 +8273,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 11.0307, y: -6}
-  m_SizeDelta: {x: 1612.9211, y: 96.4302}
+  m_AnchoredPosition: {x: 11.0307, y: -33.90449}
+  m_SizeDelta: {x: 1612.9211, y: 294.9329}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &918039350
 MonoBehaviour:
@@ -8308,9 +8309,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Basic Instructions
-
-    (Press Esc to skip)'
+  m_Text: "You are part of the mind defence called Mind Force. The mind segments
+    are infected and now you have clear them by reviving infected pearls and placing
+    them at the power switch towers to power up the segment. Once the segment is
+    powered up, you can clear the segment (level) by killing the rogues.\n\nUse WASD
+    to move the character. \nUse mouse to rotate the view.\nUse 'Q' for interactions"
 --- !u!222 &918039351
 CanvasRenderer:
   m_ObjectHideFlags: 0

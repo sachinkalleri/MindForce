@@ -16,8 +16,6 @@ public class StatePatrol : IState
 
     public void Enter()
     {
-        Debug.Log("Entering the patrol state");
-
         waypoint = owner.waypoint;
         agent = owner.GetComponent<NavMeshAgent>();
         agent.destination = waypoint.transform.position;
@@ -33,15 +31,15 @@ public class StatePatrol : IState
             agent.destination = waypoint.transform.position;
         }
 
-        if(owner.seenTarget)
+        if(owner.seenTarget && !owner.isDead)
         {
             owner.stateMachine.ChangeState(new StateChase(owner));
         }
+
     }
 
     public void Exit()
     {
-        Debug.Log("Exiting patrol state");
         agent.isStopped = true;
     }
 }

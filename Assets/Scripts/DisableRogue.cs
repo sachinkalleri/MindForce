@@ -5,10 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class DisableRogue : MonoBehaviour
 {
+    RogueController rogueController;
+    PlayerController playerController;
+    OverallManager ovrMan;
+    public GameObject deadRogue;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        ovrMan = GameObject.FindGameObjectWithTag("GameManager").GetComponent<OverallManager>();
     }
 
     // Update is called once per frame
@@ -19,21 +24,32 @@ public class DisableRogue : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player" && gameObject.tag == "VulnerableEnemy")
         {
-            if(gameObject.tag == "VulnerableEnemy")
-            {
-                if(Input.GetKeyDown(KeyCode.Q))
-                {
-                    Destroy(gameObject);
-                }                
-            }
+            Vector3 direction = other.transform.position - transform.position;
+            RaycastHit hit;
+            rogueController = gameObject.GetComponent<RogueController>();
+            playerController = gameObject.GetComponent<RogueController>().player;
 
-            //else if(gameObject.tag == "InvincibleEnemy")
-            //{
-            //    Debug.Log("Player Killed with proximity");
-            //    //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            //}
+            if (Physics.Raycast(transform.position + transform.up, direction.normalized, out hit, GetComponent<SphereCollider>().radius))
+            {
+                if (hit.collider.gameObject == other.gameObject)
+                {
+                    ovrMan.DisplayInstruction("Enemy is vulnerable as segment is powered up. Press Q to eliminate the rogue");
+                    if (Input.GetKeyDown(KeyCode.Q))
+                    {
+                        if (rogueController.seenTarget)
+                        {
+                            rogueController.seenTarget = false;
+                            rogueController.player.isSeenBy--;                           
+                        }
+
+                        rogueController.isDead = true;
+                        Instantiate(deadRogue, gameObject.transform.position, gameObject.transform.rotation);
+                        gameObject.SetActive(false);
+                    }
+                }
+            }
         }
-    }
+    }   
 }

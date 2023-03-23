@@ -2,19 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class RogueLevelManager : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-        
+        ovrMan = gameObject.GetComponent<OverallManager>();
     }
-
+    
     public bool goingRogue = false;
     public float rogueLevel = 0;
     public uint SeenBy = 0;
+
+    public Image fill;
+    public Image mask;
+
+    public Gradient rogueLevelGradient;
+
     public GameObject playerObject;
+
+    public OverallManager ovrMan;
+    public SegmentManager segMan;
+
     Color playerColor;
     Color blue = new Color(0.24f, 0.375f, 0.5f, 1f);
     Color red = new Color(0.5f, 0.03f, 0.14f, 1f);
@@ -35,7 +46,8 @@ public class RogueLevelManager : MonoBehaviour
                 Debug.Log("Gone Rogue!");
                 rogueLevel = 1;
                 goingRogue = false;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                ovrMan.FailState();
+                //segMan.RestartSegment();
             }
         }
 
@@ -55,5 +67,7 @@ public class RogueLevelManager : MonoBehaviour
         playerColor = Color.Lerp(blue, red, rogueLevel);
         playerObject.GetComponent<Renderer>().material.SetColor("_Color", playerColor);
 
+        fill.fillAmount = rogueLevel;
+        mask.color = rogueLevelGradient.Evaluate(rogueLevel);
     }
 }

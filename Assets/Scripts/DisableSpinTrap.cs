@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DisableSpinTrap : MonoBehaviour
 {
-
+    public OverallManager ovrMan;
     public GameObject spinEffect;
     public GameObject pearl;
     public GameObject trap;
@@ -19,6 +19,7 @@ public class DisableSpinTrap : MonoBehaviour
     void Start()
     {
         pearlPosition = new Vector3(transform.position.x, 2.0f, transform.position.z);
+        ovrMan = GameObject.FindGameObjectWithTag("GameManager").GetComponent<OverallManager>();
     }
 
     // Update is called once per frame
@@ -39,13 +40,19 @@ public class DisableSpinTrap : MonoBehaviour
             if(isinfected)
             {
                 spinEffect.SetActive(true);
+                ovrMan.DisplayInstruction("Press 'Q' to revive the pearl");
+            }
+
+            else
+            {
+                ovrMan.DisplayInstruction("Move closer and collect the pearl");
             }
             
             if(Input.GetKeyDown(KeyCode.Q))
             {
                 isinfected = false;
                 spinEffect.SetActive(false);
-                Destroy(trap);
+                trap.SetActive(false);
             }
         }
     }

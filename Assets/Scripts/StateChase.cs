@@ -14,8 +14,6 @@ public class StateChase : IState
     }
     public void Enter()
     {
-        Debug.Log("Entering chase");
-
         agent = owner.GetComponent<NavMeshAgent>();
 
         if(owner.seenTarget)
@@ -36,9 +34,8 @@ public class StateChase : IState
             agent.isStopped = true;
         }
 
-        if (owner.seenTarget != true)
+        if (owner.seenTarget != true || owner.isDead)
         {
-            Debug.Log("Lost Sight");
             owner.stateMachine.ChangeState(new StatePatrol(owner));
         }
 
@@ -46,7 +43,6 @@ public class StateChase : IState
 
     public void Exit()
     {
-        Debug.Log("Exiting the chase");
         agent.isStopped = true;
     }
 }

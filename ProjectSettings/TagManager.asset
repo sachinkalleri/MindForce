@@ -6,6 +6,7 @@ TagManager:
   tags:
   - VulnerableEnemy
   - InvincibleEnemy
+  - GameManager
   layers:
   - Default
   - TransparentFX

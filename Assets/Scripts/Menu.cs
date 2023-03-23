@@ -19,6 +19,7 @@ public class Menu : MonoBehaviour
     {
         StaticData.level = lev;
         StaticData.choseLevel = true;
+        StaticData.skipIntro = true;
         SceneManager.LoadScene("Game");
     }
 

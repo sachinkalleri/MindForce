@@ -158,6 +158,7 @@ public class MutilevelBarrierControl : MonoBehaviour
                 {
                     if(!levelClearedFlag)
                     {
+                        levelWonCount = 0;
                         RestartBarrier();
                     }
                 }

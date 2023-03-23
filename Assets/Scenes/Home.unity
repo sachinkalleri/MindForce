@@ -1339,19 +1339,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 789153679}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1457619768}
-        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: levels
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &789153679
 MonoBehaviour:
   m_ObjectHideFlags: 0

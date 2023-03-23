@@ -42,6 +42,7 @@ public class OverallManager : MonoBehaviour
 
     public bool isStartSequence = false;
     public bool isLevelPicked = false;
+    public bool introRunning = false;
 
     public float cameraSpeed = 2.0f;
 
@@ -62,12 +63,17 @@ public class OverallManager : MonoBehaviour
             introCamera.enabled = true;
             introListener.enabled = true;
             introTextUI.SetActive(true);
+            introRunning = true;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(introRunning && !isStartSequence && introCamera.enabled == true)
+        {
+            EndIntro();
+        }
         pearlCountText.text = pearlCount.ToString();//For displaying on the HUD
 
         if(showingInstructions)
@@ -85,10 +91,10 @@ public class OverallManager : MonoBehaviour
         }
         if(isStartSequence)
         {
-            if(Input.GetKeyDown(KeyCode.Escape))
-            {
-                EndIntro();
-            }
+            //if(Input.GetKeyDown(KeyCode.Escape))
+            //{
+            //    EndIntro();
+            //}
 
             step = cameraSpeed * Time.deltaTime;
             
@@ -100,7 +106,7 @@ public class OverallManager : MonoBehaviour
                 introCameraWaypoint = introCameraWaypoint.nextWaypoint;
             }
         }
-        if(Input.GetKeyDown(KeyCode.Escape)) //To access menu
+        if(!isStartSequence && Input.GetKeyDown(KeyCode.Escape)) //To access menu
         {
 
             FPSToggle();
@@ -189,6 +195,10 @@ public class OverallManager : MonoBehaviour
 
     public void EndIntro()
     {
+        if(!fpsController.activeInHierarchy)
+        {
+            fpsController.SetActive(true);
+        }
         fpsController.GetComponent<FirstPersonController>().enabled = true;
         introCamera.enabled = false;
         introListener.enabled = false;
@@ -196,5 +206,6 @@ public class OverallManager : MonoBehaviour
         mainListener.enabled = true;
         isStartSequence = false;
         introTextUI.SetActive(false);
+        introRunning = false;
     }
 }

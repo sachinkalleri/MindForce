@@ -26,6 +26,7 @@ public class SegmentManager : MonoBehaviour
     {
         if (StaticData.choseLevel)
         {
+            ovrMan.isStartSequence = false;
             SegmentLoad(StaticData.level);
             StaticData.choseLevel = false;
         }
@@ -33,6 +34,7 @@ public class SegmentManager : MonoBehaviour
         if(currSegment == 5)
         {
             floor.GetComponent<MeshRenderer>().material = greenGlow;
+            ovrMan.levelClearUI.SetActive(false);
             ovrMan.demoOverUI.SetActive(true);
         }
     }

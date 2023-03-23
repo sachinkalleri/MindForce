@@ -26,6 +26,10 @@ public class DisableSpinTrap : MonoBehaviour
             spinEffect.SetActive(true);
             if(Input.GetKeyDown(KeyCode.Q))
             {
+                //if (spinTrap.transform.position.y < 1.0f)
+                //    spinTrap.transform.position.y = spinTrap.transform.position.y++;
+                //else
+                //    spinTrap.transform.y = 1.0f;
                 Destroy(spinTrap);
             }
         }

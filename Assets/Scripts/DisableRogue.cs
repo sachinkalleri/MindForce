@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DisableRogue : MonoBehaviour
 {
@@ -27,6 +28,12 @@ public class DisableRogue : MonoBehaviour
                     Destroy(gameObject);
                 }                
             }
+
+            //else if(gameObject.tag == "InvincibleEnemy")
+            //{
+            //    Debug.Log("Player Killed with proximity");
+            //    //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            //}
         }
     }
 }

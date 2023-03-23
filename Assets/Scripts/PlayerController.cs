@@ -12,6 +12,11 @@ public class PlayerController : MonoBehaviour
 
     public float moveMultiplier = 5.0f;
     public float mouseSensitivity = 5.0f;
+    public float keyboardRotationSensitivity = 5.0f;
+    public uint isSeenBy = 0;
+
+    public RogueLevelManager rlm;
+
     float clamp = 0.0f;
 
     // Update is called once per frame
@@ -22,6 +27,17 @@ public class PlayerController : MonoBehaviour
 
         float upDown = Input.GetAxis("Mouse Y") * mouseSensitivity * -1;
 
+        //To rotate with Keyboards keys instead of mouse.
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.Rotate(0, -1 * keyboardRotationSensitivity, 0);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.Rotate(0, 1 * keyboardRotationSensitivity, 0);
+        }
+
         if (clamp + upDown > 80 || clamp + upDown < -80)
         {
             upDown = 0;
@@ -31,12 +47,28 @@ public class PlayerController : MonoBehaviour
 
         float forwardSpeed = Input.GetAxis("Vertical") * moveMultiplier;
 
-        float lateralSpeed = Input.GetAxis("Horizontal") * moveMultiplier;
+        float lateralSpeed = 0;//Input.GetAxis("Horizontal") * moveMultiplier;
 
         CharacterController characterController = GetComponent<CharacterController>();
 
         Vector3 speed = new Vector3(lateralSpeed, 0, forwardSpeed);
         speed = transform.rotation * speed;
         characterController.Move(speed * Time.deltaTime);
+
+        if(isSeenBy > 0)
+        {
+            if(rlm.goingRogue != true)
+            {
+                rlm.goingRogue = true;
+                rlm.SeenBy = isSeenBy;
+            }
+        }
+
+        else
+        {
+            isSeenBy = 0;
+            rlm.goingRogue = false;
+            rlm.SeenBy = isSeenBy;
+        }
     }
 }

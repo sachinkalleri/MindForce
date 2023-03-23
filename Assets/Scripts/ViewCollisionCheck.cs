@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//PROBABLY DELETE THIS
+
 public class ViewCollisionCheck : MonoBehaviour
 {
 

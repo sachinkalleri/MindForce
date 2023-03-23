@@ -13,6 +13,7 @@ public class RogueLevelManager : MonoBehaviour
 
     public bool goingRogue = false;
     public float rogueLevel = 0;
+    public uint SeenBy = 0;
     public GameObject playerObject;
     Color playerColor;
     Color blue = new Color(0.24f, 0.375f, 0.5f, 1f);
@@ -26,7 +27,7 @@ public class RogueLevelManager : MonoBehaviour
         {
             if(rogueLevel < 1)
             {
-                rogueLevel += Time.deltaTime * 1.5f;
+                rogueLevel += Time.deltaTime * SeenBy * 0.9f;
             }
 
             else

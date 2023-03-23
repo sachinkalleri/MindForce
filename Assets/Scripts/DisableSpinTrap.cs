@@ -5,32 +5,47 @@ using UnityEngine;
 public class DisableSpinTrap : MonoBehaviour
 {
 
-    public GameObject spinTrap;
     public GameObject spinEffect;
+    public GameObject pearl;
+    public GameObject trap;
+    
+    public Material greenGlow;
+
+    public Vector3 pearlPosition;
+    public float speed = 1.0f;
+    public bool isinfected = true;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        pearlPosition = new Vector3(transform.position.x, 2.0f, transform.position.z);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        float step = speed * Time.deltaTime;
+        if (!isinfected)
+        {
+            pearl.transform.position = Vector3.MoveTowards(transform.position, pearlPosition, step);
+            pearl.GetComponent<MeshRenderer>().material = greenGlow;
+        }
     }
 
     private void OnTriggerStay(Collider other)
     {
         if(other.tag == "Player")
         {
-            spinEffect.SetActive(true);
+            if(isinfected)
+            {
+                spinEffect.SetActive(true);
+            }
+            
             if(Input.GetKeyDown(KeyCode.Q))
             {
-                //if (spinTrap.transform.position.y < 1.0f)
-                //    spinTrap.transform.position.y = spinTrap.transform.position.y++;
-                //else
-                //    spinTrap.transform.y = 1.0f;
-                Destroy(spinTrap);
+                isinfected = false;
+                spinEffect.SetActive(false);
+                Destroy(trap);
             }
         }
     }

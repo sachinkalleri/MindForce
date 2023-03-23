@@ -29,14 +29,14 @@ public class PlayerController : MonoBehaviour
 
         //To rotate with Keyboards keys instead of mouse.
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Rotate(0, -1 * keyboardRotationSensitivity, 0);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(0, 1 * keyboardRotationSensitivity, 0);
-        }
+        //if (Input.GetKey(KeyCode.A))
+        //{
+        //    transform.Rotate(0, -1 * keyboardRotationSensitivity, 0);
+        //}
+        //if (Input.GetKey(KeyCode.D))
+        //{
+        //    transform.Rotate(0, 1 * keyboardRotationSensitivity, 0);
+        //}
 
         if (clamp + upDown > 80 || clamp + upDown < -80)
         {
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
         float forwardSpeed = Input.GetAxis("Vertical") * moveMultiplier;
 
-        float lateralSpeed = 0;//Input.GetAxis("Horizontal") * moveMultiplier;
+        float lateralSpeed = Input.GetAxis("Horizontal") * moveMultiplier;
 
         CharacterController characterController = GetComponent<CharacterController>();
 

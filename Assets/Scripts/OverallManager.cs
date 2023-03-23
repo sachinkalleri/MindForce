@@ -6,6 +6,9 @@ public class OverallManager : MonoBehaviour
 {
     public GameObject player;
     public GameObject rogue;
+
+    public uint pearlCount;
+
     // Start is called before the first frame update
     void Start()
     {

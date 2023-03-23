@@ -10,11 +10,13 @@ public class RogueLevelManager : MonoBehaviour
     {
         
     }
-
+    
     public bool goingRogue = false;
     public float rogueLevel = 0;
     public uint SeenBy = 0;
+
     public GameObject playerObject;
+    public SegmentManager segMan;
     Color playerColor;
     Color blue = new Color(0.24f, 0.375f, 0.5f, 1f);
     Color red = new Color(0.5f, 0.03f, 0.14f, 1f);
@@ -35,7 +37,10 @@ public class RogueLevelManager : MonoBehaviour
                 Debug.Log("Gone Rogue!");
                 rogueLevel = 1;
                 goingRogue = false;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                //segMan.restartInProgress = true;
+                segMan.RestartSegment();
+                //segMan.restartInProgress = true;
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
 

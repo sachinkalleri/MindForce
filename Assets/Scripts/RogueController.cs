@@ -21,21 +21,23 @@ public class RogueController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stateMachine.ChangeState(new StatePatrol(this));
-        //agent = GetComponent<NavMeshAgent>();
-        //agent.destination = waypoint.transform.position;
+        stateMachine.ChangeState(new StatePatrol(this));        
     }
 
     // Update is called once per frame
     void Update()
     {
         stateMachine.Update();
-        //if(!agent.pathPending && agent.remainingDistance < 0.5f)
-        //{
-        //    Waypoint nextWaypoint = waypoint.nextWaypoint;
-        //    waypoint = nextWaypoint;
-        //    agent.destination = waypoint.transform.position;
-        //}
+        
+    }
+
+    public void ResetRogue()
+    {
+        seenTarget = false;
+        gameObject.SetActive(true);
+        Start();
+        gameObject.tag = "InvincibleEnemy";
+        gameObject.transform.GetChild(2).gameObject.SetActive(true);
     }
 
     private void OnTriggerStay(Collider other)
@@ -47,7 +49,7 @@ public class RogueController : MonoBehaviour
 
             RaycastHit hit;            
 
-            if(angle < sightFoV * 0.5)
+            if(angle <= sightFoV * 0.5)
             {
                 if(Physics.Raycast(transform.position + transform.up, direction.normalized, out hit, GetComponent<SphereCollider>().radius))
                 {
@@ -73,19 +75,7 @@ public class RogueController : MonoBehaviour
                 }                
             }
 
-            //else if(Physics.Raycast(transform.position + transform.up, direction.normalized, out hit, 1.0f))
-            //{
-            //    if (hit.collider.gameObject == other.gameObject)
-            //    {
-            //        if (seenTarget != true)
-            //        {
-            //            seenTarget = true;
-            //            ++player.isSeenBy;
-            //        }
-
-            //        lastSeenPosition = other.transform.position;
-            //    }
-            //}
+            
             else
             {
                 if (seenTarget != false)
@@ -95,7 +85,7 @@ public class RogueController : MonoBehaviour
                 }
             }
 
-            if (direction.magnitude < senseRange)
+            if (direction.magnitude < senseRange && gameObject.tag == "InvincibleEnemy")
             {
                 if (Physics.Raycast(transform.position + transform.up, direction.normalized, out hit, GetComponent<SphereCollider>().radius))
                 {
@@ -118,6 +108,15 @@ public class RogueController : MonoBehaviour
                             player.isSeenBy--;
                         }
                     }
+                }
+            }
+
+            else
+            {
+                if(angle > sightFoV * 0.5 && seenTarget != false)
+                {
+                    seenTarget = false;
+                    player.isSeenBy--;
                 }
             }
         }

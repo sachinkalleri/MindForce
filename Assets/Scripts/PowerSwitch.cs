@@ -5,19 +5,25 @@ using UnityEngine;
 //Acts as a Segment(Level) Manager
 public class PowerSwitch : MonoBehaviour
 {
-    public uint pearlsRequired = 2;//Have to set this for each level
+    public uint pearlsRequired;//Have to set this for each level
     public uint pearlsPlaced = 0;
 
+    public SegmentManager segMan;
     public OverallManager ovrMan;
     public GameObject[] pearlOnSwitch;
     public GameObject[] blockade;
     public GameObject[] roguesInSegment;
-    public uint roguesCount;
+    public GameObject[] pearlsInSegment;
+    public GameObject playerSpawnPosition;
 
-    public bool flag = false;
+    public uint roguesCount;
+    public int pearlsInSegmentCount;
+
+    public bool flag;
     public bool islevelClear = false;
     public bool isSwitchedOn = false;
     public Material greenGlow;
+    public Material infectedMaterial;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +40,7 @@ public class PowerSwitch : MonoBehaviour
 
             for (int i = 0; i < roguesCount; i++)
             {
-                if(roguesInSegment[i] != null)
+                if(roguesInSegment[i].activeInHierarchy)
                 {
                     flag = false;
                 }
@@ -43,6 +49,7 @@ public class PowerSwitch : MonoBehaviour
             if(flag)
             {
                 islevelClear = true;
+                segMan.currSegment++;
             }
         }
 
@@ -74,10 +81,36 @@ public class PowerSwitch : MonoBehaviour
                     for(int i = 0; i < roguesCount; i++)
                     {
                         roguesInSegment[i].tag = "VulnerableEnemy";
-                        //roguesInSegment[i].spinEffect.SetActive(false);
+                        roguesInSegment[i].transform.GetChild(2).gameObject.SetActive(false);
                     }                    
                 }
             }
+        }
+    }
+
+    public void ResetPowerSwitch()
+    {
+        if(isSwitchedOn)
+        {
+            isSwitchedOn = false;
+        }
+
+        int temp = (int)pearlsPlaced;
+
+        for(int i = 0; i < temp; i++)
+        {
+            pearlsPlaced--;
+            pearlOnSwitch[pearlsPlaced].GetComponent<MeshRenderer>().material = infectedMaterial;
+        }
+
+        for (int i = 0; i < roguesCount; i++)
+        {
+            roguesInSegment[i].GetComponent<RogueController>().ResetRogue();
+        }
+
+        for(int i = 0; i < pearlsInSegmentCount; i++)
+        {
+            pearlsInSegment[i].GetComponent<CollectPearl>().ResetPearl();
         }
     }
 }

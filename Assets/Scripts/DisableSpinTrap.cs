@@ -45,7 +45,8 @@ public class DisableSpinTrap : MonoBehaviour
             {
                 isinfected = false;
                 spinEffect.SetActive(false);
-                Destroy(trap);
+                trap.SetActive(false);
+                //Destroy(trap);
             }
         }
     }

@@ -6,6 +6,8 @@ public class CollectPearl : MonoBehaviour
 {
     public OverallManager ovrMan;
     public DisableSpinTrap spinTrap;
+
+    public Material infectedMaterial;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,13 +20,23 @@ public class CollectPearl : MonoBehaviour
         
     }
 
+    public void ResetPearl()
+    {
+        spinTrap.isinfected = true;
+        spinTrap.spinEffect.SetActive(true);
+        spinTrap.trap.SetActive(true);
+        gameObject.transform.position = spinTrap.pearlPosition;
+        gameObject.GetComponent<MeshRenderer>().material = infectedMaterial;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player" && !spinTrap.isinfected)
         {
             Debug.Log("Pearl Collected");
             ovrMan.pearlCount++;
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            //Destroy(gameObject);
         }
     }
 }

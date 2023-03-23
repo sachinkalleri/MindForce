@@ -17,11 +17,12 @@ public class PlayerController : MonoBehaviour
 
     public RogueLevelManager rlm;
 
-    float clamp = 0.0f;
+    //float clamp = 0.0f;
 
     // Update is called once per frame
     void Update()
     {
+        /*
         float rotation = Input.GetAxis("Mouse X") * mouseSensitivity;
         transform.Rotate(0, rotation, 0);
 
@@ -54,6 +55,8 @@ public class PlayerController : MonoBehaviour
         Vector3 speed = new Vector3(lateralSpeed, 0, forwardSpeed);
         speed = transform.rotation * speed;
         characterController.Move(speed * Time.deltaTime);
+
+        */
 
         if(isSeenBy > 0)
         {

@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class TrapPlayer : MonoBehaviour
 {
+    public DisableSpinTrap spinTrap;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,18 +21,10 @@ public class TrapPlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.tag == "Player" && spinTrap.isinfected)
         {
             Debug.Log("Player Trapped");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            Debug.Log("Player Exited");
         }
     }
 }

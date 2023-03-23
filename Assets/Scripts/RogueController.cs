@@ -14,6 +14,7 @@ public class RogueController : MonoBehaviour
     public StateMachine stateMachine = new StateMachine();
 
     float sightFoV = 110.0f;
+    public float senseRange = 5.0f;//Range to which rogues can sense player even if they are not facing them. Can be adjusted for each rogues.
     public bool seenTarget = false;
     public Vector3 lastSeenPosition;
 
@@ -44,8 +45,7 @@ public class RogueController : MonoBehaviour
             Vector3 direction = other.transform.position - transform.position;
             float angle = Vector3.Angle(direction, transform.forward);
 
-            RaycastHit hit;
-            //seenTarget = false;
+            RaycastHit hit;            
 
             if(angle < sightFoV * 0.5)
             {
@@ -70,20 +70,54 @@ public class RogueController : MonoBehaviour
                             player.isSeenBy--;
                         }
                     }
-                }
-
-                //else
-                //{
-                //    seenTarget = false;
-                //}
+                }                
             }
 
+            //else if(Physics.Raycast(transform.position + transform.up, direction.normalized, out hit, 1.0f))
+            //{
+            //    if (hit.collider.gameObject == other.gameObject)
+            //    {
+            //        if (seenTarget != true)
+            //        {
+            //            seenTarget = true;
+            //            ++player.isSeenBy;
+            //        }
+
+            //        lastSeenPosition = other.transform.position;
+            //    }
+            //}
             else
             {
                 if (seenTarget != false)
                 {
                     seenTarget = false;
                     player.isSeenBy--;
+                }
+            }
+
+            if (direction.magnitude < senseRange)
+            {
+                if (Physics.Raycast(transform.position + transform.up, direction.normalized, out hit, GetComponent<SphereCollider>().radius))
+                {
+                    if (hit.collider.gameObject == other.gameObject)
+                    {
+                        if (seenTarget != true)
+                        {
+                            seenTarget = true;
+                            ++player.isSeenBy;
+                        }
+
+                        lastSeenPosition = other.transform.position;
+                    }
+
+                    else
+                    {
+                        if (seenTarget != false)
+                        {
+                            seenTarget = false;
+                            player.isSeenBy--;
+                        }
+                    }
                 }
             }
         }

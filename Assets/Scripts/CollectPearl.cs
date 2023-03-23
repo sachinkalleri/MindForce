@@ -5,6 +5,7 @@ using UnityEngine;
 public class CollectPearl : MonoBehaviour
 {
     public OverallManager ovrMan;
+    public DisableSpinTrap spinTrap;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +20,7 @@ public class CollectPearl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.tag == "Player" && !spinTrap.isinfected)
         {
             Debug.Log("Pearl Collected");
             ovrMan.pearlCount++;
